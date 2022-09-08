@@ -8,12 +8,12 @@ class SignUpScreen extends StatelessWidget {
 
   final cpfFormatter = MaskTextInputFormatter(
     mask: '###.###.###-##',
-    filter: { '#' : RegExp( r'[0-9]' ) }
+    filter: {'#': RegExp(r'[0-9]')},
   );
 
   final phoneFormatter = MaskTextInputFormatter(
     mask: '## # ####-####',
-    filter: { '#' : RegExp( r'[0-9]' ) }
+    filter: {'#': RegExp(r'[0-9]')},
   );
 
   @override
@@ -43,7 +43,9 @@ class SignUpScreen extends StatelessWidget {
                   ),
                   Container(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 32, vertical: 40),
+                      horizontal: 32,
+                      vertical: 40,
+                    ),
                     decoration: const BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.vertical(
@@ -68,12 +70,12 @@ class SignUpScreen extends StatelessWidget {
                         ),
                         CustomTextField(
                           icon: Icons.phone,
-                          inputFormatters: [ phoneFormatter ],
+                          inputFormatters: [phoneFormatter],
                           label: 'Celular',
                         ),
                         CustomTextField(
                           icon: Icons.file_copy,
-                          inputFormatters: [ cpfFormatter ],
+                          inputFormatters: [cpfFormatter],
                           label: 'CPF',
                         ),
                         SizedBox(
