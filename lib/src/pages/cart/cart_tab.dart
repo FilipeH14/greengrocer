@@ -1,13 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:greengrocer/src/config/custom_colors.dart';
+import 'package:greengrocer/src/models/cart_item_model.dart';
 import 'package:greengrocer/src/pages/cart/components/cart_tile.dart';
 import 'package:greengrocer/src/services/utils_sevices.dart';
 import 'package:greengrocer/src/config/app_data.dart' as app_data;
 
-class CartTab extends StatelessWidget {
+class CartTab extends StatefulWidget {
+  const CartTab({Key? key}) : super(key: key);
+
+  @override
+  State<CartTab> createState() => _CartTabState();
+}
+
+class _CartTabState extends State<CartTab> {
   final UtilsServices utilsServices = UtilsServices();
 
-  CartTab({Key? key}) : super(key: key);
+  void removeItemFromCart(CartItemModel cartItem) {
+    setState(() => app_data.cartItem.remove(cartItem));
+  }
+
+  double cartTotalPrice() {
+    double total = 0;
+    for (var item in app_data.cartItem) {
+      // setState(() => total += item.totalPrice());
+      total += item.totalPrice();
+    }
+
+    return total;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +38,10 @@ class CartTab extends StatelessWidget {
           Expanded(
             child: ListView.builder(
               itemCount: app_data.cartItem.length,
-              itemBuilder: (_, index) => CartTile(cartItem: app_data.cartItem[index]),
+              itemBuilder: (_, index) => CartTile(
+                cartItem: app_data.cartItem[index],
+                remove: removeItemFromCart,
+              ),
             ),
           ),
           Container(
@@ -46,7 +69,7 @@ class CartTab extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  utilsServices.priceToCurrency(50.5),
+                  utilsServices.priceToCurrency(cartTotalPrice()),
                   style: TextStyle(
                     fontSize: 23,
                     color: CustomColors.customSwatchColor,
@@ -68,11 +91,43 @@ class CartTab extends StatelessWidget {
                         fontSize: 18,
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: () async {
+                      bool? result = await showOrderConfirmation();
+
+                      print(result);
+                    },
                   ),
                 ),
               ],
             ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<bool?> showOrderConfirmation() {
+    return showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        title: const Text('Confirmação'),
+        content: const Text('Deseja realmente concluir o pedido?'),
+        actions: [
+          TextButton(
+            child: const Text('Não'),
+            onPressed: () => Navigator.of(context).pop(false),
+          ),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+            ),
+            child: const Text('Sim'),
+            onPressed: () => Navigator.of(context).pop(true),
           ),
         ],
       ),
