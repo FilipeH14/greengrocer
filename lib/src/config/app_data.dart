@@ -104,13 +104,13 @@ List<OrderModel> orders = [
   OrderModel(
     copyAndPaste: 'q1w2e3r4t5y6',
     createdDateTime: DateTime.parse(
-      '2022-06-08 10:00:10.458',
+      '2023-06-08 10:00:10.458',
     ),
     overdueDateTime: DateTime.parse(
       '2023-06-08 11:00:10.458',
     ),
     id: 'asd6a54da6s2d1',
-    status: 'preparing_purchase',
+    status: 'pending_payment',
     total: 11.0,
     items: [
       CartItemModel(
@@ -128,7 +128,7 @@ List<OrderModel> orders = [
   OrderModel(
     copyAndPaste: 'q1w2e3r4t5y6',
     createdDateTime: DateTime.parse(
-      '2022-06-08 10:00:10.458',
+      '2023-06-08 10:00:10.458',
     ),
     overdueDateTime: DateTime.parse(
       '2023-06-08 11:00:10.458',

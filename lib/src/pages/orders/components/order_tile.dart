@@ -99,7 +99,7 @@ class OrderTile extends StatelessWidget {
                   'assets/app_images/pix.png',
                   height: 18,
                 ),
-                label: const Text('er qr Code pix'),
+                label: const Text('Ler qr Code pix'),
                 onPressed: () {},
               ),
             ),
