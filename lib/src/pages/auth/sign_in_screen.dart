@@ -1,10 +1,10 @@
-import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:greengrocer/src/config/custom_colors.dart';
 import 'package:greengrocer/src/pages/common_widgets/app_name_widget.dart';
 import 'package:greengrocer/src/pages/common_widgets/custom_text_field.dart';
-import 'package:greengrocer/src/pages/auth/sign_up_screen.dart';
-import 'package:greengrocer/src/pages/base/base_screen.dart';
+import 'package:greengrocer/src/routes/page_routes.dart';
 
 class SignInScreen extends StatelessWidget {
   const SignInScreen({Key? key}) : super(key: key);
@@ -83,10 +83,8 @@ class SignInScreen extends StatelessWidget {
                           'Entrar',
                           style: TextStyle(fontSize: 18),
                         ),
-                        onPressed: () => Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(
-                            builder: (ctx) => const BaseScreen(),
-                          ),
+                        onPressed: () => Get.offNamed(
+                          PageRoutes.baseScreenRoute,
                         ),
                       ),
                     ),
@@ -96,7 +94,8 @@ class SignInScreen extends StatelessWidget {
                         child: Text(
                           'Esqueceu a senha?',
                           style: TextStyle(
-                              color: CustomColors.customContrastColor),
+                            color: CustomColors.customContrastColor,
+                          ),
                         ),
                         onPressed: () {},
                       ),
@@ -140,9 +139,7 @@ class SignInScreen extends StatelessWidget {
                           'Criar conta',
                           style: TextStyle(fontSize: 18),
                         ),
-                        onPressed: () => Navigator.of(context).push(
-                          MaterialPageRoute(builder: (ctx) => SignUpScreen()),
-                        ),
+                        onPressed: () => Get.toNamed(PageRoutes.signUpRoute),
                       ),
                     ),
                   ],
