@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:greengrocer/src/config/custom_colors.dart';
+import 'package:greengrocer/src/pages/auth/controller/auth_controller.dart';
 import 'package:greengrocer/src/pages/common_widgets/app_name_widget.dart';
 import 'package:greengrocer/src/pages/common_widgets/custom_text_field.dart';
 import 'package:greengrocer/src/routes/page_routes.dart';
@@ -10,6 +11,10 @@ class SignInScreen extends StatelessWidget {
   SignInScreen({Key? key}) : super(key: key);
 
   final _formKey = GlobalKey<FormState>();
+
+  // Controlador de campos
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -67,6 +72,7 @@ class SignInScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       CustomTextField(
+                          controller: emailController,
                           icon: Icons.email,
                           label: 'Email',
                           validator: (email) {
@@ -78,6 +84,7 @@ class SignInScreen extends StatelessWidget {
                             return null;
                           }),
                       CustomTextField(
+                        controller: passwordController,
                         icon: Icons.lock,
                         label: 'Senha',
                         isSecret: true,
@@ -94,27 +101,43 @@ class SignInScreen extends StatelessWidget {
                       ),
                       SizedBox(
                         height: 50,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(18),
-                            ),
-                          ),
-                          child: const Text(
-                            'Entrar',
-                            style: TextStyle(fontSize: 18),
-                          ),
-                          onPressed: () {
+                        child: GetX<AuthController>(
+                          builder: (authController) {
+                            return ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(18),
+                                ),
+                              ),
+                              onPressed: authController.isLoading.value
+                                  ? null
+                                  : () {
+                                      FocusScope.of(context).unfocus();
 
-                            if(_formKey.currentState!.validate()) {
-                              print('Todos os campos estão válidos');
-                            } else {
-                              print('Campos não válidos');
-                            }
+                                      if (_formKey.currentState!.validate()) {
+                                        String email = emailController.text;
+                                        String password =
+                                            passwordController.text;
 
-                            // Get.offNamed(
-                            //   PageRoutes.baseScreenRoute,
-                            // );
+                                        authController.signIn(
+                                          email: email,
+                                          password: password,
+                                        );
+                                      } else {
+                                        print('Campos não válidos');
+                                      }
+
+                                      // Get.offNamed(
+                                      //   PageRoutes.baseScreenRoute,
+                                      // );
+                                    },
+                              child: authController.isLoading.value
+                                  ? const CircularProgressIndicator()
+                                  : const Text(
+                                      'Entrar',
+                                      style: TextStyle(fontSize: 18),
+                                    ),
+                            );
                           },
                         ),
                       ),
