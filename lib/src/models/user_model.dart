@@ -27,8 +27,8 @@ class UserModel {
 
   Map<String, dynamic> toJson() => _$UserModelToJson(this);
 
-  @override
-  String toString() {
-    return 'name: $name | cpf: $cpf';
-  }
+  // @override
+  // String toString() {
+  //   return 'name: $name | cpf: $cpf';
+  // }
 }

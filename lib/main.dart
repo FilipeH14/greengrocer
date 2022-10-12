@@ -5,6 +5,7 @@ import 'package:greengrocer/src/routes/app_pages.dart';
 import 'package:greengrocer/src/routes/page_routes.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   Get.put(AuthController());
   runApp(const MyApp());
 }
